@@ -21,12 +21,24 @@ public class Facility {
         recentID++;
     }
 
+    public Facility(int facilityID, String facilityName, double facilityPrice, Date decommissionDate) {
+        this.facilityID = facilityID;
+        this.facilityName = facilityName;
+        this.facilityPrice = facilityPrice;
+        this.decommissionDate = decommissionDate;
+    }
+
     public ArrayList<Booking> getBookings (Date date) {
-        ArrayList<Booking> returnBookings = new ArrayList<>();
+        ArrayList<Booking> returnBookings = new ArrayList<>(9);
+
+        for (int i = 0; i < 9; i++) {
+            returnBookings.add(null); //Initialising List as null
+        }
+
         for (Booking b : bookings) {
             SimpleDateFormat fmt = new SimpleDateFormat("ddMMyyyy");
-            if (fmt.format(date).equals(fmt.format(this.decommissionDate))) {
-                returnBookings.add(b);
+            if (fmt.format(date).equals(fmt.format(b.getDate()))) {
+                returnBookings.set(b.getSlotNo() - 1, b);
             }
         }
         return returnBookings;
@@ -72,8 +84,12 @@ public class Facility {
         return bookings;
     }
 
-    public void addBoking(Booking booking) {
+    public void addBooking(Booking booking) {
         bookings.add(booking);
+    }
+
+    public boolean isNotBooked () {
+        return this.bookings.isEmpty();
     }
 
     public static void setRecentID(int recentID) {
@@ -85,6 +101,11 @@ public class Facility {
     }
 
     public String getCSV() {
-        return facilityID + "," + facilityName + "," + facilityPrice + "," + decommissionDate;
+        String date = "null";
+        if (decommissionDate != null) {
+            SimpleDateFormat fmt = new SimpleDateFormat("ddMMyyyy");
+            date = fmt.format(decommissionDate);
+        }
+        return facilityID + "," + facilityName + "," + facilityPrice + "," + date;
     }
 }

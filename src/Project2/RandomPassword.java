@@ -3,7 +3,7 @@ package Project2;
 public class RandomPassword {
     private static final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    private static String randomPassword() {
+    public static String randomPassword() {
         StringBuilder str = new StringBuilder(8);
         int randomNums = (int) (Math.random() * 9999);
         str.append(String.valueOf(randomNums));

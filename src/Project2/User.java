@@ -2,15 +2,34 @@ package Project2;
 
 import java.util.ArrayList;
 
+import static Project2.RandomPassword.randomPassword;
+
 public class User {
     private  int userID;
     private String userEmail;
     private String userPass;
+    private boolean isAdmin;
     private ArrayList<Booking> bookings = new ArrayList<>();
 
-    public User(String userEmail, String userPass) {
+    private static int recentID = 1;
+
+    public User(String userEmail) {
+        this.userEmail = userEmail;
+        this.userPass = randomPassword();
+        this.isAdmin = false;
+        this.userID = recentID;
+        recentID++;
+    }
+
+    public User(int userId, String userEmail, String userPass, boolean isAdmin) {
+        this.userID = userId;
         this.userEmail = userEmail;
         this.userPass = userPass;
+        this.isAdmin = isAdmin;
+    }
+
+    public static void setRecentID(int recentID) {
+        User.recentID = recentID;
     }
 
     public int getUserID() {
@@ -37,11 +56,19 @@ public class User {
         this.userPass = userPass;
     }
 
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
     public ArrayList<Booking> getBookings() {
         return bookings;
     }
 
-    public void addBoking(Booking booking) {
+    public void addBooking(Booking booking) {
         bookings.add(booking);
     }
 
@@ -54,6 +81,6 @@ public class User {
     }
 
     public String getCSV() {
-        return userID + "," + userEmail + "," + userPass;
+        return userID + "," + userEmail + "," + userPass + "," + (isAdmin ? 1 : 2);
     }
 }

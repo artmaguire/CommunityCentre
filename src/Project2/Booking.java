@@ -1,6 +1,8 @@
 package Project2;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 public class Booking {
     private int bookingID;
@@ -8,7 +10,15 @@ public class Booking {
     private int userId;
     private Date date;
     private int slotNo;
-    private boolean payment; //Paid or not paid
+    private boolean payment = false; //Paid or not paid
+
+    public Booking(int facilityId, int userId, Date date, int slotNo) {
+        this.bookingID = Math.abs((int) UUID.randomUUID().getMostSignificantBits());
+        this.facilityId = facilityId;
+        this.userId = userId;
+        this.date = date;
+        this.slotNo = slotNo;
+    }
 
     public Booking(int bookingID, int facilityId, int userId, Date date, int slotNo, boolean payment) {
         this.bookingID = bookingID;
@@ -68,6 +78,7 @@ public class Booking {
     }
 
     public String getCSV() {
-        return bookingID + "," + facilityId + "," + userId + "," + date + "," + slotNo + "," + payment;
+        SimpleDateFormat fmt = new SimpleDateFormat("ddMMyyyy");
+        return bookingID + "," + facilityId + "," + userId + "," + fmt.format(date) + "," + slotNo + "," + (payment ? 1 : 2);
     }
 }
