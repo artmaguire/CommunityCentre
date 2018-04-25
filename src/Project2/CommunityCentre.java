@@ -372,7 +372,23 @@ public class CommunityCentre {
     }
 
     private static void registerNewUser() {
-
+        String email;
+        while (true) {
+            System.out.println("\n" + EQUALS_SEPERATOR);
+            System.out.println("Email: ");
+            email = sc.nextLine();
+            if (!email.contains("@") || !email.contains(".")) {
+                System.out.println("Invalid Email.");
+                continue;
+            }
+            break;
+        }
+        User newUser = new User(email);
+        newUser.setAdmin(false);
+        System.out.println("Your New Password: " + newAdmin.getUserPass());
+        users.add(newUser); //add them to the array of users
+        loggedInUser = newUser; //set the new user as the current logged in user
+    }
     }
 
     /**
@@ -402,15 +418,125 @@ public class CommunityCentre {
     }
 
     private static void viewBookingsForFacility() {
+        System.out.println("Enter the facility ID for which you would like to view the bookings.");
+        int facilityID = Integer.parseInt(sc.nextLine());
+
+        File f = new File(bookingFileName);
+        if (f.isFile()) {
+            try {
+                sc = new scanner(f);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        int i = 0;
+
+        while (sc.hasNext()) {
+            String line = sc.nextLine();
+            String[] values = line.split(",");
+            String readFacility = values[1];
+
+            if (facilityID == readFacility) {
+                if (i == 0) {
+                    System.out.println("BookingID\tDate\tUser ID\tDate\tSlot Number\tPaid?");
+                }
+
+                System.out.println(values[0] + "\t\t" + values[2] + "\t\t" + "\t\t" + values[3] + "\t\t" + values[4] + "\t\t" + values[5]);
+            }
+        }
 
     }
 
     private static void removeFacility() {
+        File f = new File(bookingFileName);
+
+        if (f.isFile()) {
+            Scanner scanner = null;
+
+            try {
+                sc = new scanner(f);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        while (sc.hasNext()) {
+            String line = sc.nextLine();
+            String[] values = line.split(",");
+            int facilityID = 0;
+
+            try {
+                bookingID = values[0].parse;
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 
     private static void decommissionFacility() {
+        File f = new File(bookingFileName);
+        if (f.isFile()) {
+            Scanner scanner = null;
+            try {
+                sc = new scanner(f);
+            } catch (FileNotFoundException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        while (sc.hasNext()) {
+            String line = sc.nextLine();
+            String[] values = line.split(",");
+            int facilityID = 0;
 
+            try {
+                bookingID = values[0].parse;
+            } catch (ParseException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("Enter the ID of the facility you would like to decommission.");
+        int facilityIDSelected = sc.nextLine(), facilityID = 0;
+        boolean facilityFound = false;
+        File f = new File(facilityFileName);
+
+        if (f.isFile()) {
+            Scanner scanner = null;
+
+            try {
+                scanner = new Scanner(f);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        int i = 0;
+        while ((i < bookings.size()) && (facilityFound != true)) {
+            String line = scanner.nextLine();
+            String[] values = line.split(",");
+            facilityID = values[0];
+
+            if (facilityID == facilityIDSelected) {
+                facilityFound = true;
+                System.out.println("Facility" + facilityIDSelected + ", has been decommissioned.");
+            } else {
+                System.out.println("Facility" + facilityIDSelected + ", has not been decommissioned.");
+            }
+
+        }
+
+        System.out.println("Enter date to recommission the facility on: ");
+        String recommissionDate =  sc.nextLine();
+        today = LocalDate.now();
+        todayAsString = LocalDate.parse(today);
+        if (recommissionDate != todayAsString){
+            System.out.println("Facility is currently out of commission.");
+        }else{
+            Facility f = facilityIDSelected;
+            facilityMap.put(f.getFacilityID(), f);
+        }
     }
 
     private static void recommissionFacility() {
@@ -418,10 +544,60 @@ public class CommunityCentre {
     }
 
     private static void recordPayment() {
+        File f = new File(bookingFileName);
+
+        if (f.isFile()) {
+            try {
+                sc = new Scanner(f);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        while (sc.hasNext()) {
+            String line = sc.nextLine();
+            String[] values = line.split(",");
+            int bookingID = 0;
+
+            try {
+                bookingID = values[0].parse;
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 
     private static void viewAccountStatements() {
+        ArrayList<Booking> accountStatements = loggedInUser.getBookings();
+        String username = this.username;
+
+        if (f.isFile()) {
+
+            try {
+                sc = new scanner(f);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        int i = 0;
+
+        while (sc.hasNext()) {
+            String line = sc.nextLine();
+            String[] values = line.split(",");
+            String readUsername = values[2];
+
+            if (username == readUsername) {
+                if (i == 0) {
+                    System.out.println("Booking ID\tFacility ID\tDate\tSlot Number\tPaid?");
+                }
+
+                System.out.println(values[0] + "\t\t" + values[1] + "\t\t" + values[2] + "\t" + values[4] + "\t\t" + values[5]);
+                i++;
+            }
+        }
 
     }
 
