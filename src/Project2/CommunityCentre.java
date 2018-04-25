@@ -1,6 +1,5 @@
 package Project2;
 
-import java.awt.print.Book;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -135,6 +134,10 @@ public class CommunityCentre {
         loggedInUser = newAdmin; //set the new user as the current logged in user
     }
 
+    /**
+     * This method displays all the options in the community centre, asks for an input from the user and uses a switch
+     * to switch to the different methods.
+     */
     private static void userOptions() {
         while (true) {
             System.out.println("0) Return");
@@ -179,7 +182,11 @@ public class CommunityCentre {
         }
     }
 
+    /**
+     * This method check how many booking are inside the ArrayList 'bookings' and then displays all the bookings.
+     */
     private static void viewBookings() {
+        String tabNo = null;
         ArrayList<Booking> bookings = loggedInUser.getBookings();
         if (bookings.isEmpty()) {
             System.out.println("You have no bookings");
@@ -188,11 +195,21 @@ public class CommunityCentre {
         System.out.println("Date\t\tSlot\tFacility\tPayment Status");
         for (Booking b : bookings) {
             SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
-            System.out.println(fmt.format(b.getDate()) + "\t" + b.getSlotNo() + 8 + "\t" +
-                    facilityMap.get(b.getFacilityId()).getFacilityName() + "\t" + b.isPayment());
+            if (facilityMap.get(b.getFacilityId()).getFacilityName().length() < 4) {
+                tabNo = "\t\t\t";
+            } else if (facilityMap.get(b.getFacilityId()).getFacilityName().length() >= 4) {
+                tabNo = "\t\t";
+            } else {
+                tabNo = "\t";
+            }
+            System.out.println(fmt.format(b.getDate()) + "\t" + b.getSlotNo() + 8 + "\t\t" +
+                    facilityMap.get(b.getFacilityId()).getFacilityName() + tabNo + b.isPayment());
         }
     }
 
+    /**
+     * Shows the availability of facilities after the present date and gives the option then to book the facility.
+     */
     private static void viewAvailability() {
         if (facilityMap.values().isEmpty()) {
             System.out.println("No Facilities Exist.");
@@ -256,6 +273,11 @@ public class CommunityCentre {
         System.out.println(EQUALS_SEPERATOR);
     }
 
+    /**
+     * Allows the user to book facilities that are currently available at the hour.
+     * It asks for an input in Date format which will then be parsed into a date.
+     * The method will then provide a valid error message if the Date in invalid or it will show the times available for booking.
+     */
     private static void bookFacility() {
         if (facilityMap.values().isEmpty()) {
             System.out.println("No Facilities Exist.");
@@ -353,6 +375,9 @@ public class CommunityCentre {
 
     }
 
+    /**
+     * This method allows an Admin to add any facility they want to the list of Facilities and it will then be saved.
+     */
     private static void addNewFacility() {
         System.out.println("\n====================");
         String name;
@@ -434,6 +459,9 @@ public class CommunityCentre {
         }
     }
 
+    /**
+     * This method reads from the facilities file and add them to a Mapping.
+     */
     private static void loadFacilities() {
         File f = new File(facilityFileName);
         if (f.isFile()) {
@@ -471,6 +499,9 @@ public class CommunityCentre {
         }
     }
 
+    /**
+     * Reads from the booking file and creates a new Booking object that is then added to the users Object.
+     */
     private static void loadBookings() {
         File f = new File(bookingFileName);
         if (f.isFile()) {
@@ -534,6 +565,9 @@ public class CommunityCentre {
         }
     }
 
+    /**
+     This method writes the facilities to the file using a PrintWriter.
+     */
     private static void writeFacilities() {
         PrintWriter pw;
         try {
@@ -548,6 +582,9 @@ public class CommunityCentre {
         }
     }
 
+    /**
+     * This method writes the bookings to the file using a PrintWriter
+     */
     private static void writeBookings() {
         PrintWriter pw;
         try {
