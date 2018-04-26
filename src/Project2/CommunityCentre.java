@@ -20,8 +20,8 @@ public class CommunityCentre {
 
     private static Scanner sc = new Scanner(System.in);
 
-    private static final String EQUALS_SEPERATOR = "====================";
-    private static final String DASH_SEPERATOR = "--------------------";
+    private static final String EQUALS_SEPARATOR = "====================";
+    private static final String DASH_SEPARATOR = "--------------------";
 
     public static void main(String[] args) {
 
@@ -49,7 +49,7 @@ public class CommunityCentre {
             } else {
                 System.out.println("1) Login User");
             }
-            System.out.println(DASH_SEPERATOR);
+            System.out.println(DASH_SEPARATOR);
             System.out.print("?) ");
 
             int option;
@@ -85,9 +85,9 @@ public class CommunityCentre {
     private static void loginUser() {
         int attempts = 3;
         while (attempts > 0) {
-            System.out.println("\n" + EQUALS_SEPERATOR);
+            System.out.println("\n" + EQUALS_SEPARATOR);
             System.out.println("Attempts Remaining: " + attempts);
-            System.out.println("\n" + EQUALS_SEPERATOR);
+            System.out.println("\n" + EQUALS_SEPARATOR);
             System.out.println("Username: ");
             String username = sc.nextLine();
             System.out.println("Password: ");
@@ -118,7 +118,7 @@ public class CommunityCentre {
     private static void createAdmin() {
         String email;
         while (true) {
-            System.out.println("\n" + EQUALS_SEPERATOR);
+            System.out.println("\n" + EQUALS_SEPARATOR);
             System.out.println("Email: ");
             email = sc.nextLine();
             if (!email.contains("@") || !email.contains(".")) {
@@ -146,7 +146,7 @@ public class CommunityCentre {
             System.out.println("3) Book Facility");
             System.out.println("4) View Statements");
             if (loggedInUser.isAdmin()) {
-                System.out.println(EQUALS_SEPERATOR + "\nAdmin Options:\n" + EQUALS_SEPERATOR);
+                System.out.println(EQUALS_SEPARATOR + "\nAdmin Options:\n" + EQUALS_SEPARATOR);
                 System.out.println("5) Register New User");
                 System.out.println("6) Add New Facility");
                 System.out.println("7) View Bookings For Facility");
@@ -260,7 +260,7 @@ public class CommunityCentre {
         }
         bookings = f.getBookings(date);
 
-        System.out.println(EQUALS_SEPERATOR);
+        System.out.println(EQUALS_SEPARATOR);
         for (int i = 0; i < 9; i++) {
             Booking b = bookings.get(i);
             System.out.print(i + 9 + ") ");
@@ -270,7 +270,7 @@ public class CommunityCentre {
                 System.out.println("Booked");
             }
         }
-        System.out.println(EQUALS_SEPERATOR);
+        System.out.println(EQUALS_SEPARATOR);
     }
 
     /**
@@ -329,7 +329,7 @@ public class CommunityCentre {
         bookings = f.getBookings(date);
 
         System.out.println("Choose Time Slot:");
-        System.out.println(EQUALS_SEPERATOR);
+        System.out.println(EQUALS_SEPARATOR);
         for (int i = 0; i < 9; i++) {
             Booking b = bookings.get(i);
             System.out.print(i + 9 + ") ");
@@ -339,7 +339,7 @@ public class CommunityCentre {
                 System.out.println("Booked");
             }
         }
-        System.out.println(EQUALS_SEPERATOR);
+        System.out.println(EQUALS_SEPARATOR);
         int option;
         while (true) {
             System.out.print("?) ");
@@ -374,7 +374,7 @@ public class CommunityCentre {
     private static void registerNewUser() {
         String email;
         while (true) {
-            System.out.println("\n" + EQUALS_SEPERATOR);
+            System.out.println("\n" + EQUALS_SEPARATOR);
             System.out.println("Email: ");
             email = sc.nextLine();
             if (!email.contains("@") || !email.contains(".")) {

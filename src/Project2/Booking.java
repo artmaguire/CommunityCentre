@@ -69,7 +69,7 @@ public class Booking {
         this.slotNo = slotNo;
     }
 
-    public boolean isPayment() {
+    public boolean isPaid() {
         return payment;
     }
 
