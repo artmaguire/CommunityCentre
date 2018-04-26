@@ -1,7 +1,5 @@
 package Project2;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,7 +25,7 @@ class FacilityTest {
 
     @Test
     void getBookings() {
-        ArrayList<Booking> dayBookings = facility.getBookings(new Date());
+        ArrayList<Booking> dayBookings = facility.getBookingsDay(new Date());
 
         for(int i = 0; i < 9; i++) {
             System.out.print(i + 1 + ": ");

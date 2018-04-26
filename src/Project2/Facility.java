@@ -3,6 +3,7 @@ package Project2;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 public class Facility {
     private int facilityID;
@@ -10,6 +11,8 @@ public class Facility {
     private double facilityPrice;
     private Date decommissionDate = null; //Decommission until date
     private ArrayList<Booking> bookings = new ArrayList<>();
+
+    static String facilityHeader = "FacilityID\tName\t\t\tPrice\tDecommissioned?";
 
     private static int recentID = 1;
 
@@ -28,7 +31,7 @@ public class Facility {
         this.decommissionDate = decommissionDate;
     }
 
-    public ArrayList<Booking> getBookings (Date date) {
+    public ArrayList<Booking> getBookingsDay(Date date) {
         ArrayList<Booking> returnBookings = new ArrayList<>(9);
 
         for (int i = 0; i < 9; i++) {
@@ -72,15 +75,17 @@ public class Facility {
         return decommissionDate;
     }
 
+    public String getDecommissionDateString() {
+        if (decommissionDate == null) return "No";
+        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+        return fmt.format(decommissionDate);
+    }
+
     public void setDecommissionDate(Date date) {
         this.decommissionDate = date;
     }
 
-    public void recommission() {
-        decommissionDate = null;
-    }
-
-    public ArrayList<Booking> getBookings() {
+    public ArrayList<Booking> getBookingsDay() {
         return bookings;
     }
 
@@ -107,5 +112,19 @@ public class Facility {
             date = fmt.format(decommissionDate);
         }
         return facilityID + "," + facilityName + "," + facilityPrice + "," + date;
+    }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+        return facilityID + ") " + facilityName + "\t\tEUR " + facilityPrice + "\t" + ((decommissionDate != null) ? fmt.format(decommissionDate) : "No");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Facility facility = (Facility) o;
+        return facilityID == facility.facilityID;
     }
 }

@@ -12,6 +12,8 @@ public class Booking {
     private int slotNo;
     private boolean payment = false; //Paid or not paid
 
+    static String bookingHeader = "Date\t\tUser ID\tSlot\tPaid?";
+
     public Booking(int facilityId, int userId, Date date, int slotNo) {
         this.bookingID = Math.abs((int) UUID.randomUUID().getMostSignificantBits());
         this.facilityId = facilityId;
@@ -80,5 +82,11 @@ public class Booking {
     public String getCSV() {
         SimpleDateFormat fmt = new SimpleDateFormat("ddMMyyyy");
         return bookingID + "," + facilityId + "," + userId + "," + fmt.format(date) + "," + slotNo + "," + (payment ? 1 : 2);
+    }
+
+    @Override
+    public  String toString() {
+        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+        return fmt.format(date) + "\t" + userId + "\t\t" + (slotNo + 8) + "\t\t" + payment;
     }
 }
